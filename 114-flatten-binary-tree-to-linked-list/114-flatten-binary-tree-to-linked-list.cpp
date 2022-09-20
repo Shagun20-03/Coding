@@ -10,20 +10,36 @@
  * };
  */
 class Solution {
-    // TreeNode* prev=NULL;
 public:
-    TreeNode* prev=nullptr;
+    // TreeNode* curr=nullptr;
     void flatten(TreeNode* root) {
         //recursive approach
         
-        if(root==nullptr)
-            return;
+//         if(root==nullptr)
+//             return;
         
-        flatten(root->right);
-        flatten(root->left);
+//         flatten(root->right);
+//         flatten(root->left);
         
-        root->right=prev;
-        root->left=nullptr;
-        prev=root;
+//         root->right=prev;
+//         root->left=nullptr;
+//         prev=root;
+        TreeNode* curr=root;
+
+        while(curr!=nullptr)
+        {
+            if(curr->left!=nullptr)
+            {
+                TreeNode* pre=curr->left;
+                while(pre->right!=nullptr)
+                {
+                    pre=pre->right;
+                }
+                pre->right=curr->right;
+                curr->right=curr->left;
+                curr->left=nullptr;
+            }
+            curr=curr->right;
+        }
     }
 };
