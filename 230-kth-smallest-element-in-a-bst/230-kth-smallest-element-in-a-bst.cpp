@@ -20,6 +20,7 @@ class Solution {
         k--;
         if(k==0){
             ans=node->val;
+            return;
         }
         inorder(node->right, k);
     }
