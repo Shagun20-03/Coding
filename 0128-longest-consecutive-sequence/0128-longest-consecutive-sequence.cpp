@@ -9,7 +9,7 @@ public:
         int longeststreak=0;
         for(int num: nums)
         {
-            if(!hashset.count(num-1))
+            if(hashset.count(num-1)!=true)
             {
                 int currentnum=num;
                 int currentStreak=1;
