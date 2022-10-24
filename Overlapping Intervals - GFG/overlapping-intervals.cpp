@@ -12,11 +12,17 @@ public:
          return ans;
          
          sort(intervals.begin(), intervals.end());
+         
          vector<int> temp=intervals[0];
-         for(auto i:intervals){
-             if(i[0]<=temp[1]){
+         
+         for(auto i:intervals)
+         {
+             if(i[0]<=temp[1]) //if 1st element of interval is less than last element of temp interval
+             {
+                 //put max of right intervals of temp interval and interval
                  temp[1]=max(i[1], temp[1]);
-             }else{
+             }
+             else{
                  ans.push_back(temp);
                  temp=i;
              }
