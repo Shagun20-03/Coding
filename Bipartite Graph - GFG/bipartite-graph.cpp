@@ -16,7 +16,7 @@ class Solution {
                 if(dfs(it, !col, adj, color)==false)
                 return false;
             }
-            else if(color[it]==col)
+            else if(color[it]==color[node])
             return false;
         }
         return true;
