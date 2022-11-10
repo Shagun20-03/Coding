@@ -1,75 +1,41 @@
 class Solution {
-    // private:
-    // bool detect(int src, vector<vector<int>> prerequisites, int vis[]){
-//         vis[src]=1;
-//         queue<pair<int, int>> q;
-//         //{curr_node, parent node}
-//         q.push({src, -1});
-//         while(!q.empty())
-//         {
-//             int node=q.front().first;
-//             int parent=q.front().second;
-//             q.pop();
-            
-//             for(auto adjacentnode: prerequisites[node]){
-//                 if(!vis[adjacentnode]){
-//                     vis[adjacentnode]=1;
-//                     q.push({adjacentnode, node});
-//                 }
-//                 else if(parent!=adjacentnode)
-//                     return true;
-//             }
-//         }
-//         return false;
-//     }
-// public:
-//     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-//         int vis[numCourses]={0};
-// //         vector<int> adj(numCourses);
-        
-// //         for(int i=0;i<prerequisites.size();i++){
-// //             adj
-// //         }
-        
-//         for(int i=0;i<numCourses;i++)
-//         {
-//             if(!vis[i])
-//             {
-//                 if(detect(i, prerequisites, vis))
-//                     return true;
-//             }
-//         }
-//         return false;
-    public:
+public:
     bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
-        vector<vector<int>> graph(numCourses);
-        vector<int> degree(numCourses, 0);
-        queue<int> zeroDegree;
-        for(int i = 0; i<prerequisites.size(); i++){
-            graph[prerequisites[i][1]].push_back(prerequisites[i][0]);
-            degree[prerequisites[i][0]]++;
+        //return true if there is no cycle as if there will be a cycle we may not take the course according to the question so we will check for topo sort if topo sort is there for all n it means there is no cycle
+        //so we are coding for detect a cycle for directed graph using bfs
+        vector<vector<int>> adj(numCourses);
+        vector<int>indegree(numCourses, 0);
+        int cnt=0;
+        
+        for(auto i: prerequisites){
+            adj[i[1]].push_back(i[0]);
+            indegree[i[0]]++;
         }
         
-        for(int i = 0; i<degree.size(); i++){
-            if(degree[i] == 0){
-                zeroDegree.push(i);
-                numCourses--;
+        queue<int> q;
+        for(int i=0;i<indegree.size();i++) {
+            if(indegree[i]==0){
+                q.push(i);
             }
         }
-        
-        while(!zeroDegree.empty()){
-            int node = zeroDegree.front();
-            zeroDegree.pop();
-            for(int i = 0; i<graph[node].size(); i++){
-                int connectedNode = graph[node][i];
-                degree[connectedNode]--;
-                if(degree[connectedNode] == 0){
-                    zeroDegree.push(connectedNode);
-                    numCourses--;
-                }
+        //vector<int> topo;
+        while(!q.empty()){
+            int node=q.front();
+            q.pop();
+            cnt++;
+            //topo.push_back(node);
+            
+            //node is in the topo sort so remove it from indegree
+            for(auto it: adj[node]){
+                indegree[it]--;
+                if(indegree[it]==0)
+                    q.push(it);
             }
         }
-        
-        return numCourses == 0;
+        return cnt==numCourses;
+        // if(cnt == numCourses)
+        //     return true;
+        // else 
+        //     return false;
     }
 };
