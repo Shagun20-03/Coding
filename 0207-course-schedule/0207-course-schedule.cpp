@@ -5,11 +5,21 @@ public:
         //so we are coding for detect a cycle for directed graph using bfs
         vector<vector<int>> adj(numCourses);
         vector<int>indegree(numCourses, 0);
-        int cnt=0;
+        //int cnt=0;
         
         for(auto i: prerequisites){
-            adj[i[1]].push_back(i[0]);
-            indegree[i[0]]++;
+            // adj[i[1]].push_back(i[0]);
+            // indegree[i[0]]++;
+            vector<int> data=i;
+            int a=data[0];
+            int b=data[1];
+            adj[a].push_back(b);
+        }
+        
+        for(int i=0;i<numCourses;i++){
+            for(auto it:adj[i]){
+                indegree[it]++;
+            }
         }
         
         queue<int> q;
@@ -18,12 +28,12 @@ public:
                 q.push(i);
             }
         }
-        //vector<int> topo;
+        vector<int> topo;
         while(!q.empty()){
             int node=q.front();
             q.pop();
-            cnt++;
-            //topo.push_back(node);
+            //cnt++;
+            topo.push_back(node);
             
             //node is in the topo sort so remove it from indegree
             for(auto it: adj[node]){
@@ -32,7 +42,10 @@ public:
                     q.push(it);
             }
         }
-        return cnt==numCourses;
+        if(topo.size()==numCourses)
+            return true;
+        return false;
+        //return cnt==numCourses;
         // if(cnt == numCourses)
         //     return true;
         // else 
