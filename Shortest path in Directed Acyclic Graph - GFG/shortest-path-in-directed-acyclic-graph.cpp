@@ -59,9 +59,11 @@ class Solution {
                     dist[v] = dist[node] + wt;
             }
         }
-        for(int i=0; i<N; i++)
-        if(dist[i]==1e9)
-        dist[i]=-1;
+        for(int i=0; i<N; i++){
+            //
+            if(dist[i]==1e9)
+            dist[i]=-1;
+        }
         return dist;
     }
 };
