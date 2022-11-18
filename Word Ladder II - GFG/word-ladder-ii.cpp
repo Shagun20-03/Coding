@@ -11,12 +11,12 @@ public:
     vector<vector<string>> findSequences(string beginWord, string endWord, vector<string>& wordList) {
         // code here
         unordered_set<string> st(wordList.begin(), wordList.end());
-        //queue will contain list of words
+        //queue will store sequences 
         queue<vector<string>> q;
         q.push({beginWord});
         //words that are previously used
-        vector<string> usedOnLevel;
-        usedOnLevel.push_back(beginWord);
+        vector<string> usedWords;
+        usedWords.push_back(beginWord);
         //before starting we are at level 0
         int level=0;
         vector<vector<string>> ans;
@@ -27,9 +27,10 @@ public:
             //erase all words that have been used in the previous levels 
             if(vec.size()>level) {
                 level++;
-                for(auto it: usedOnLevel) {
+                for(auto it: usedWords) {
                     st.erase(it);
                 }
+                usedWords.clear();
             }
             
         //last word in the sequence will be the word used for transformation
@@ -44,12 +45,13 @@ public:
                     vec.push_back(word);
                     q.push(vec);
                     //mark as visited on level
-                    usedOnLevel.push_back(word);
-                    //for particular transformtion thw word was added but we need to take it out for further 
+                    usedWords.push_back(word);
+                    //for particular transformation thw word was added but we need to take it out for further 
                     //steps
                     vec.pop_back();
                 }
             }
+            //for next iterations on other characters we have to retain original string
             word[i]=original;
         }
         if(word==endWord) {
@@ -57,7 +59,7 @@ public:
                 ans.push_back(vec);
             }
         //if we have one of the sequence in the answer
-        else if(ans[0].size()==vec.size()){
+        else if(ans[0].size()==vec.size()) {
             ans.push_back(vec);
         }
         }
