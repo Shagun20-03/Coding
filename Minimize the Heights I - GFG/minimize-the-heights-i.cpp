@@ -17,9 +17,9 @@ public:
         int diff=maxi-mini;
         
         //to minimize the difference we have to add with smallest and subtract with greatest
-        for(int i=1;i<n;i++){
-            maxi=max(arr[i-1]+k, arr[n-1]-k);
-            mini=min(arr[i]-k, arr[0]+k);
+        for(int i=0;i<n;i++) { 
+            maxi=max(arr[i]+k, arr[n-1]-k);
+            mini=min(arr[i+1]-k, arr[0]+k);
             
             diff=min(diff, maxi- mini);
         }
