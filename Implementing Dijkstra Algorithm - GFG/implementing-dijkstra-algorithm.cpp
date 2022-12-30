@@ -30,7 +30,7 @@ class Solution
             for(auto it: adj[node]) {
                 int adjNode=it[0];
                 int edgeWeight=it[1];
-                
+                //sum of previous weight and edge weight less than current weight take this new weight
                 if(dis+edgeWeight < dist[adjNode]) {
                     dist[adjNode]=dis+edgeWeight;
                     pq.push({dist[adjNode], adjNode});
