@@ -14,12 +14,12 @@ class Solution{
 	int lps(string s) {
 	    // Your code goes here
 	    // A is the LPS
-	    vector<int>A(s.size(), 0);
+	    vector<int>LPS(s.size(), 0);
 	    int j=0, i=1;
 	    
 	    while(i<s.size()) {
 	        if(s[i]==s[j]) {
-	            A[i]=j+1;
+	            LPS[i]=j+1;
 	            j++;
 	            i++;
 	        }
@@ -28,10 +28,10 @@ class Solution{
 	                i++;
 	            else
 	            //we will go to shorter prefix
-	                j=A[j-1];
+	                j=LPS[j-1];
 	        }
 	    }
-	    return A.back();
+	    return LPS.back();
 	}
 };
 
