@@ -1,43 +1,54 @@
 class Solution {
 public:
+    int n, m;
+    bool check(pair<int, int> a){
+        return (a.first>=0 && a.first<n && a.second>=0 && a.second<m);
+    }
     vector<int> getBiggestThree(vector<vector<int>>& grid) {
-         int  row = grid.size(), col = grid[0].size();
+        set<long long>s;
+        n=grid.size();
+        m=grid[0].size();
         
-        // using set<int> takes much less memory, but is 3x slower
-        priority_queue<int> pq;
-        
-        // size 0 Rhombus shapes
-        for (auto &r: grid) {
-            for(auto &c: r) pq.push(c);
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                s.insert(grid[i][j]);
+            }
         }
-        
-        // // size k Rhombus shapes
-        for (int k = 1; k < min(row, col); ++k) {
-            for (int i = 0; i + 2 * k < row; ++i) {
-                for (int j = 0; j + 2 * k < col; ++j) {
-                    int sum = 0;
-                    
-                    // collecting data along 4 lines
-                    for (int m = 0; m < k; ++m) {
-                        sum += grid[i + k - m][j + m]; // left->up
-                        sum += grid[i + m][j + k + m]; // top->right
-                        sum += grid[i + k + m][j + 2 * k - m]; //right->down
-                        sum += grid[i + 2 * k - m][j + k - m]; // bottom->left
+        for(int l=1;l<=50;l++) {
+            for(int i=0;i<n;i++) {
+                for(int j=0;j<m;j++) {
+                    pair<int, int>a={i-l, j};
+                    pair<int, int>b={i, j-l};
+                    pair<int, int>c={i+l, j};
+                    pair<int, int>d={i, j+l};
+                    if(check(a)==false && check(b)==false && check(c)==false &&                                 check(d)==false)
+                        goto end;
+                    if(check(a) && check(b) && check(c) && check(d)) {
+                        long long total=(long long)grid[i-l][j]+grid[i+l][j]+grid[i][j-l]+grid[i][j+l];
+                        for(int k=1;k<=l-1;k++) total+=(long long)grid[i-k][j-l+k];
+                        for(int k=1;k<=l-1;k++) total+=(long long)grid[i-k][j+l-k];
+                        for(int k=1;k<=l-1;k++) total+=(long long)grid[i+k][j+l-k];
+                        for(int k=1;k<=l-1;k++) total+=(long long)grid[i+k][j-l+k];
+                        s.insert(total);
                     }
-                    pq.push(sum);
                 }
             }
         }
-        
-        // formatting the answer 
-        vector<int> ret;
-        while (pq.empty() == false) {
-            if (ret.empty() == true || ret.back() != pq.top()) {
-                ret.push_back(pq.top());
-            }
-            if (ret.size() == 3) return ret;
-            pq.pop();
+        end:
+        vector<int> ans;
+        for(auto i:s){
+            ans.push_back(i);
         }
-        return ret;
+        if(ans.size()<=3){
+            reverse(ans.begin(), ans.end());
+            return ans;
+        }
+        vector<int> res;
+        res.push_back(ans.back());
+        ans.pop_back();
+        res.push_back(ans.back());
+        ans.pop_back();
+        res.push_back(ans.back());
+        return res;
     }
 };
