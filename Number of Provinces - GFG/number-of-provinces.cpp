@@ -5,39 +5,55 @@ using namespace std;
 
 // } Driver Code Ends
 //User function Template for C++
-
-class Solution {
-    private:
-    void dfs(int node, vector<int> adjlis[], int vis[]){
-        vis[node]=1;
-        for(auto i:adjlis[node]){
-            if(!vis[i]){
-                dfs(i, adjlis, vis);
-            }
+class DisjointSet {
+    public:
+    vector<int> parent, size;
+    DisjointSet(int n) {
+        parent.resize(n+1);
+        size.resize(n+1);
+        for(int i=0;i<=n;i++) {
+            parent[i]=i;
+            size[i]=1;
         }
     }
+    int findUPar(int node) {
+        if(node==parent[node])
+            return node;
+        return parent[node]=findUPar(parent[node]);
+    }
+    void UnionBySize(int u, int v) {
+        int ulp_u=findUPar(u);
+        int ulp_v=findUPar(v);
+        if(ulp_u==ulp_v) return;
+        if(size[ulp_u]<size[ulp_v]) {
+            parent[ulp_u]=ulp_v;
+            size[ulp_v]+=size[ulp_u];
+        }
+        else{
+            parent[ulp_v]=ulp_u;
+            size[ulp_u]+=size[ulp_v];
+        }
+    }
+};
+class Solution {
   public:
     int numProvinces(vector<vector<int>> adj, int V) {
         // code here
-        vector<int> adjlis[V];
-        //converting adjacency matrix to adjacency list
-        for(int i=0;i<V;i++){
-            for(int j=0;j<V;j++){
-                if(adj[i][j]==1 && i!=j){
-                    adjlis[i].push_back(j);
-                    adjlis[j].push_back(i);
+        DisjointSet ds(V);
+        for(int i=0;i<V;i++) {
+            for(int j=0;j<V;j++) {
+                if(adj[i][j]==1) {
+                    ds.UnionBySize(i, j);
                 }
             }
         }
-        int vis[V]={0};
-        int cnt=0;
+        int count=0;
         for(int i=0;i<V;i++){
-            if(!vis[i]){
-                cnt++;
-                dfs(i, adjlis, vis);    //traversal of one province at a time
+            if(ds.parent[i]==i){
+                count++;
             }
         }
-        return cnt;
+        return count;
     }
 };
 
