@@ -1,36 +1,41 @@
-void operator+=(vector<int> &a, const vector<int> &b) {
-    for (int i = 0; i < a.size(); i++)
-        a[i] += b[i];
-}
-
-void operator-=(vector<int> &a, const vector<int> &b) {
-    for (int i = 0; i < a.size(); i++)
-        a[i] -= b[i];
-}
-
-bool operator<(const vector<int> &a, const int &n) {
-    for (int i : a)
-        if (i < n)
-            return true;
-    return false;
-}
 class Solution {
 public:
-    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs, int cost=0) {
-        if (needs < 0)
-        return INT_MAX;
-
-    int m = inner_product(needs.begin(), needs.end(), price.begin(), cost);
-
-    for (auto &offer : special) {
-        if (cost + offer.back() >= m) // pruning
-            continue;
-        needs -= offer;
-        m = min(m, shoppingOffers(price, special, needs, cost + offer.back()));
-        needs += offer;
-    }
-
-    return m;
+    map<vector<int>,int>state;
+    int shoppingOffers(vector<int>& price, vector<vector<int>>& special, vector<int>& needs) {
+        if(state[needs]) return state[needs];
+        int bestPrice = calculateWOOffers(price, needs);
+        for (const auto& sp : special) {
+            substractOffer(sp, needs);
+            if (noNegatives(needs)) {
+                int withOffer = sp.back() + shoppingOffers(price, special, needs);
+                bestPrice = min(bestPrice, withOffer);
+            }
+            addOffer(sp, needs);
+        }
+        return state[needs]=bestPrice;
     }
     
+    int calculateWOOffers(const vector<int>& price, const vector<int>& needs) {
+        int totalPrice{0};
+        for (size_t i = 0; i < price.size(); ++i)
+            totalPrice += price[i] * needs[i];
+        return totalPrice;
+    }
+    
+    void substractOffer(const vector<int>& special, vector<int>& needs) {
+        for (size_t i = 0; i < needs.size(); ++i)
+            needs[i] -= special[i];
+    }
+    
+    void addOffer(const vector<int>& special, vector<int>& needs) {
+        for (size_t i = 0; i < needs.size(); ++i)
+            needs[i] += special[i];
+    }
+    
+    bool noNegatives(const vector<int>& needs) {
+        for (int n : needs)
+            if (n < 0)
+                return false;
+        return true;
+    }
 };
