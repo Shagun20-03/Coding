@@ -51,95 +51,51 @@ class Solution {
         int n=grid.size();
         DisjointSet ds(n*n);
         
-        // for(int row=0;row<n;row++){
-        //     for(int col=0;col<n;col++){
-        //         if(grid[row][col]==0) continue;
-        //         int dr[]={-1, 0, +1, 0};
-        //         int dc[]={0, -1, 0, +1};
-        //         for(int ind=0;ind<4;ind++){
-        //             int newr=row+dr[ind];
-        //             int newc=col+dr[col];
-        //             if(isValid(newr, newc, n) && grid[newr][newc]==1){  
-        //                 int nodeNo=n*row+col;   //n is the n of col
-        //                 int adjNodeNo=n*newr+newc;
-        //                 ds.UnionBySize(nodeNo, adjNodeNo);  //connect them
-        //             }       
-        //         }
-        //     }
-        // }
-        // //step 2 convert all 0s to 1s
-        // int mx=0;
-        // for(int row=0;row<n;row++){
-        //     for(int col=0;col<n;col++){
-        //         if(grid[row][col]==1) continue;
-        //         int dr[]={-1, 0, +1, 0};
-        //         int dc[]={0, -1, 0, +1};
-        //         set<int> components;
-        //         for(int ind=0;ind<4;ind++){
-        //             int newr=row+dr[ind];
-        //             int newc=col+dc[ind];
-        //             if(isValid(newr, newc, n)){
-        //                 if(grid[newr][newc]==1){ //if it is 1 then only we can connect
-        //                     components.insert(ds.findUPar(newr*n+newc));
-        //                 }
-        //             }
-        //         }
-        //         int sizeTotal=0;    //current total size of component
-        //         for(auto it: components) {
-        //             sizeTotal+=ds.size[it];
-        //         }
-        //         mx=max(mx, sizeTotal+1);    //include compponents of converting 0 to 1
-        //     }
-        // }
-        // for(int cellNo=0;cellNo<n*n;cellNo++){
-        //     mx=max(mx, ds.size[ds.findUPar(cellNo)]);
-        // }
-        // return mx;
-        
-        for (int row = 0; row < n ; row++) {
-            for (int col = 0; col < n ; col++) {
-                if (grid[row][col] == 0) continue;
-                int dr[] = { -1, 0, 1, 0};
-                int dc[] = {0, -1, 0, 1};
-                for (int ind = 0; ind < 4; ind++) {
-                    int newr = row + dr[ind];
-                    int newc = col + dc[ind];
-                    if (isValid(newr, newc, n) && grid[newr][newc] == 1) {
-                        int nodeNo = row * n + col;
-                        int adjNodeNo = newr * n + newc;
-                        ds.UnionBySize(nodeNo, adjNodeNo);
-                    }
+        for(int row=0;row<n;row++){
+            for(int col=0;col<n;col++){
+                if(grid[row][col]==0) continue;
+                int dr[]={-1, 0, +1, 0};
+                int dc[]={0, -1, 0, +1};
+                for(int ind=0;ind<4;ind++){
+                    int newr=row+dr[ind];
+                    int newc=col+dr[col];
+                    if(isValid(newr, newc, n) && grid[newr][newc]==1){  
+                        int nodeNo=n*row+col;   //n is the n of col
+                        int adjNodeNo=n*newr+newc;
+                        ds.UnionBySize(nodeNo, adjNodeNo);  //connect them
+                    }       
                 }
             }
         }
-        // step 2
-        int mx = 0;
-        for (int row = 0; row < n; row++) {
-            for (int col = 0; col < n; col++) {
-                if (grid[row][col] == 1) continue;
-                int dr[] = { -1, 0, 1, 0};
-                int dc[] = {0, -1, 0, 1};
+        //step 2 convert all 0s to 1s
+        int mx=0;
+        for(int row=0;row<n;row++){
+            for(int col=0;col<n;col++){
+                if(grid[row][col]==1) continue;
+                int dr[]={-1, 0, +1, 0};
+                int dc[]={0, -1, 0, +1};
                 set<int> components;
-                for (int ind = 0; ind < 4; ind++) {
-                    int newr = row + dr[ind];
-                    int newc = col + dc[ind];
-                    if (isValid(newr, newc, n)) {
-                        if (grid[newr][newc] == 1) {
-                            components.insert(ds.findUPar(newr * n + newc));
+                for(int ind=0;ind<4;ind++){
+                    int newr=row+dr[ind];
+                    int newc=col+dc[ind];
+                    if(isValid(newr, newc, n)){
+                        if(grid[newr][newc]==1){ //if it is 1 then only we can connect
+                            components.insert(ds.findUPar(newr*n+newc));
                         }
                     }
                 }
-                int sizeTotal = 0;
-                for (auto it : components) {
-                    sizeTotal += ds.size[it];
+                int sizeTotal=0;    //current total size of component
+                for(auto it: components) {
+                    sizeTotal+=ds.size[it];
                 }
-                mx = max(mx, sizeTotal + 1);
+                mx=max(mx, sizeTotal+1);    //include compponents of converting 0 to 1
             }
         }
-        for (int cellNo = 0; cellNo < n * n; cellNo++) {
-            mx = max(mx, ds.size[ds.findUPar(cellNo)]);
+        for(int cellNo=0;cellNo<n*n;cellNo++){
+            mx=max(mx, ds.size[ds.findUPar(cellNo)]);
         }
         return mx;
+ 
     }
 };
 
