@@ -24,8 +24,8 @@ public:
             Matrix[i][N-1]+=max(Matrix[i-1][N-2], Matrix[i-1][N-1]);
         }
         int res=INT_MIN;
-        for(int i=0;i<N;i++){
-            res=max(res, Matrix[N-1][i]);
+        for(int j=0;j<N;j++){
+            res=max(res, Matrix[N-1][j]);
         }
         return res;
     }
