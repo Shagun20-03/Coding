@@ -100,8 +100,8 @@ class Solution {
       int l=dia(root->left, res);
       int r=dia(root->right, res);
       
-      int temp=max(l, r)+1;
-      int ans=max(temp, l+r+1);     //when dia will pass trhough current node
+       int temp=max(l, r)+1;
+      int ans=max(temp, l+r+1);     //when dia will pass through current node
       
       res=max(res, ans);
       return temp;
