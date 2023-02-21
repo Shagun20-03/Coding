@@ -13,16 +13,19 @@ public:
         // code here
         int ans=0;
         int maxval=*max_element(A, A+n);
-        
+        //no of rows will be max element of array cz in worst case max value will be the max diff
+        //col will be no of elements
         vector<vector<int>> dp(2*maxval+1, vector<int> (n, 0));
-        for(int i=1;i<n;i++){
-            for(int j=0;j<i;j++){
+        for(int i=1;i<n;i++)
+        {
+            for(int j=0;j<i;j++)
+            {
                 int diff=A[i]-A[j];
                 dp[diff][i]=dp[diff][j]+1;
                 ans=max(ans, dp[diff][i]);
             }
         }
-        return ans+1;
+        return ans+1;   //ans contains no of ap and ans+1 will be length of longest ap
     }
 };
 
