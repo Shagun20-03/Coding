@@ -11,7 +11,8 @@ public:
         int ptr=0;
         for(int i=0;i<k;i++){
             while(ptr<n && projects[ptr].first<=w){
-                q.push(projects[ptr++].second);
+                q.push(projects[ptr].second);
+                ptr++;
             }
             if(q.empty()){
                 break;
