@@ -2,7 +2,7 @@
 ## Medium
 <div class="problems_problem_content__Xm_eO"><p><span style="font-size:18px">Given an undirected graph with <strong>V </strong>vertices(numbered from <strong>1</strong> to <strong>V</strong>) and <strong>E </strong>edges. Find the number of good components in the graph.<br>
 A component of the graph is good if and only if the component is a fully connected component.<br>
-<strong>Note:&nbsp;</strong>A fully connected component&nbsp;is a subgraph of a given graph such that there's an&nbsp;edge between every pair of vertices in a component, the given graph can be a&nbsp;<strong>disconnected graph. </strong>Consider the adjacency list from index <strong>1</strong>.</span></p>
+<strong>Note:&nbsp;</strong>A fully connected component&nbsp;is a subgraph of a given graph such that there's an&nbsp;edge between every pair of vertices in a component, the given graph can be a&nbsp;<strong>disconnected graph. </strong>Consider the adjacency list from vertices&nbsp;<strong>1</strong>.</span></p>
 
 <p><strong><span style="font-size:18px">Example 1:</span></strong></p>
 
