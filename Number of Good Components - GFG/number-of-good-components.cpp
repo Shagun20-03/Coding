@@ -10,43 +10,32 @@ using namespace std;
 
 class Solution {
   public:
-  bool BFS(int node,bool visited[],vector<vector<int>>& adj)
-    {
-        queue<int> q;
-        q.push(node);
-        visited[node]=true;
-        int nodes=0;
-        int edges=adj[node].size();
-        bool flag=true;
-        while(!q.empty())
-        {
-            int curr=q.front();
-            q.pop();
-            nodes++;
-            
-            if(adj[curr].size()!=edges) flag=false;
-            
-            for(auto it:adj[curr])
-            {
-                if(visited[it]) continue;
-                visited[it]=true;
-                q.push(it);
-            }
-        }
-        return flag && edges+1==nodes;
-    }
+  vector<int> vis;
+  void dfs(int source, vector<vector<int>> &adj, int &vertex, int &edges){
+      vis[source]=1;
+      vertex++;
+      for(auto child:adj[source]){
+          edges++;
+          if(!vis[child]){
+              dfs(child, adj, vertex, edges);
+          }
+      }
+  }
     int findNumberOfGoodComponent(int V, vector<vector<int>>& adj) {
         // code here
-        bool visited[V+1]={0};
-        int count=0;
-        for(int i=1;i<=V;i++)
-        {
-            if(!visited[i])
-            {
-                if(BFS(i,visited,adj)) count++;
+        vis=vector<int>(V+1, 0);
+        int ans=0;
+        for(int i=1;i<=V;i++){
+            if(!vis[i]){
+                int vertex=0, edges=0;
+                dfs(i, adj, vertex, edges);
+                edges=edges/2;
+                if(edges==((vertex)*(vertex-1))/2){
+                    ans++;
+                }
             }
         }
-        return count;
+        return ans;
     }
 };
 
