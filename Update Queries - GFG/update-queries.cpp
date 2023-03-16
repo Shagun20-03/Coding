@@ -12,33 +12,38 @@ class Solution{
         vector<int> updateQuery(int N,int Q,vector<vector<int>> &U)
         {
             // code here
-            vector<vector<int>> a(N+1,vector<int>(17,0));
-        for(auto &x:U){
-            for(int i=0;i<17;i++){
-                int mask=1<<i;
-                if(mask&x[2]){
-                    int l=x[0]-1,r=x[1]-1;
-                    a[l][i]++;
-                    a[r+1][i]--;
+            vector<int> ans(N, 0);
+            vector<vector<int>>p(N, vector<int>(31, 0));     //to update queries from l(prefix array)
+        
+            for(int i=0;i<Q;i++){
+                int l=U[i][0]-1;    //we are taking for 0-based index(in ques it is given for 1-based)
+                int r=U[i][1]-1;
+                int x=U[i][2];
+                
+                for(int j=0;j<31;j++){
+                    if(((1<<j)&x)>0)    //if given operation value exists
+                    {
+                        p[l][j]++;  //increasing prefix sum value by 1
+                        if(r+1<N)
+                        p[r+1][j]--;    //r ke right side wale ko negative kr rhe so that prefix sum hokar right value de
+                    }
                 }
             }
-        }
-        for(int i=1;i<N;i++){
-            for(int j=0;j<17;j++){
-                a[i][j]+=a[i-1][j];
+            for(int i=1;i<N;i++){
+                for(int j=0;j<31;j++){
+                    p[i][j]+=p[i-1][j];
+                }
             }
-        }
-        vector<int> ans(N);
-        for(int i=0;i<N;i++){
-            int x=0;
-            for(int j=0;j<17;j++){
-                int mask=1<<j;
-                if(a[i][j]>0)
-                x+=mask;
+            for(int i=0;i<N;i++){
+                int temp=0;
+                for(int j=0;j<31;j++){
+                    if(p[i][j]>0){
+                        temp+=(1<<j);
+                    }
+                }
+                ans[i]=temp;
             }
-            ans[i]=x;
-        }
-        return ans;
+            return ans;
         }
 };
 
