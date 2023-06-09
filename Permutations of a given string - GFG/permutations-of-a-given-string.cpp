@@ -5,7 +5,7 @@ using namespace std;
 // } Driver Code Ends
 class Solution
 {
-    private:
+     private:
     void permutation(string S, int ind, vector<string> &ans){
         //base case
         if(ind==S.size()-1){
@@ -25,7 +25,7 @@ class Solution
 		vector<string>find_permutation(string S)
 		{
 		    // Code here there
-		    vector<string> ans;
+		     vector<string> ans;
 		    permutation(S, 0, ans);
 		    
 		    //to sort answer in lexicographic order
