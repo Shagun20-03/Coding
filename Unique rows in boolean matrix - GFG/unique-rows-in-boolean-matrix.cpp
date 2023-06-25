@@ -5,37 +5,16 @@ using namespace std;
 
 vector<vector<int>> uniqueRow(int M[MAX][MAX],int row,int col);
 
-int main()
-{
-    int T;
-    cin>>T;
-    while(T--)
-    {
-    	int n,m;
-    	cin>>n>>m;
-    	int a[MAX][MAX];
-    	for(int i=0;i<n;i++)
-    	for(int j=0;j<m;j++)
-    	cin>>a[i][j];
-    	vector<vector<int>> vec = uniqueRow(a,n,m);
-    	for(int i = 0;i<vec.size();i++){
-    	    for(int x : vec[i]){
-    	        cout<<x<<" ";
-    	    }
-    	    cout<<"$";
-    	}
-    	cout<<endl;
-    }
-}
 
 // } Driver Code Ends
-
-
-/*You are required to complete this function*/
-vector<vector<int>> uniqueRow(int M[MAX][MAX],int row,int col)
+class Solution
 {
-//Your code here
-    vector<vector<int>> res;
+    public:
+    // #define MAX 1000
+    vector<vector<int>> uniqueRow(int M[MAX][MAX],int row,int col)
+    {
+        //Your code here
+        vector<vector<int>> res;
     unordered_set<string> s;
     
     for(int i=0;i<row;i++)
@@ -53,6 +32,33 @@ vector<vector<int>> uniqueRow(int M[MAX][MAX],int row,int col)
         }
     }
     return res;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main()
+{
+    int T;
+    cin>>T;
+    while(T--)
+    {
+    	int n,m;
+    	cin>>n>>m;
+    	int a[MAX][MAX];
+    	for(int i=0;i<n;i++)
+    	for(int j=0;j<m;j++)
+    	cin>>a[i][j];
+    	Solution ob;
+    	vector<vector<int>> vec = ob.uniqueRow(a,n,m);
+    	for(int i = 0;i<vec.size();i++){
+    	    for(int x : vec[i]){
+    	        cout<<x<<" ";
+    	    }
+    	    cout<<"$";
+    	}
+    	cout<<endl;
+    }
 }
-//tc-O(n^2)
-//sc-O(row*col)
+
+// } Driver Code Ends
