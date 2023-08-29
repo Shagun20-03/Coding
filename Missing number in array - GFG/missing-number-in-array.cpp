@@ -12,16 +12,15 @@ using namespace std;
 
 class Solution{
   public:
-    int MissingNumber(vector<int>& array, int n) {
+    int missingNumber(vector<int>& array, int n) {
         // Your code goes here
-        sort(array.begin(), array.end());
-        int ans, curSum=0;
-        int sum=(n*(n+1)/2);
+        int reqSum=(n*(n+1))/2;
+        int curSum=0;
         
         for(int i=0;i<n-1;i++){
             curSum+=array[i];
         }
-        return sum-curSum;
+        return reqSum-curSum;
     }
 };
 
@@ -37,7 +36,7 @@ int main() {
         vector<int> array(n - 1);
         for (int i = 0; i < n - 1; ++i) cin >> array[i];
         Solution obj;
-        cout << obj.MissingNumber(array, n) << "\n";
+        cout << obj.missingNumber(array, n) << "\n";
     }
     return 0;
 }
