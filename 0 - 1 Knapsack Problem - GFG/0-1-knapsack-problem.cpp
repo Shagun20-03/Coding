@@ -7,6 +7,11 @@ using namespace std;
 class Solution
 {
     public:
+    // int t[1001][1001];
+    // Solution(){
+    //      memset(t, -1, sizeof(t));    
+    // }
+   
     //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) 
     { 
@@ -23,22 +28,21 @@ class Solution
     
     //Solution-2
     //memoization approach-storing the precomputed value
-    // int t[n+1][W+1];
           
-    //     if(n==0 || W==0) 
-    //         return 0;
+        // if(n==0 || W==0) 
+        //     return 0;
     
-    //     if(t[n][W]!=-1) 
-    //         return t[n][W];
+        // if(t[n][W]!=-1) 
+        //     return t[n][W];
         
-    //     if(wt[n]>W) {
-    //         t[n][W]=knapSack(W, wt, val, n-1);
-    //         return t[n][W];
-    //     }
-    //     else{
-    //         t[n][W]=max(val[n-1]+knapSack(W-wt[n-1], wt, val, n-1), knapSack(W, wt, val, n-1));
-    //         return t[n][W];
-    //     }
+        // if(wt[n-1]>W) {
+        //     t[n][W]=knapSack(W, wt, val, n-1);
+        //     return t[n][W];
+        // }
+        // else if(wt[n-1]<=W){
+        //     t[n][W]=max(val[n-1]+knapSack(W-wt[n-1], wt, val, n-1), knapSack(W, wt, val, n-1));
+        //     return t[n][W];
+        // }
     
     //Solution-3 DP Approach
     vector<vector<int>> t(n+1, vector<int>(W+1));
@@ -69,6 +73,7 @@ class Solution
         return t[n][W];
     }
 };
+
 
 //{ Driver Code Starts.
 
