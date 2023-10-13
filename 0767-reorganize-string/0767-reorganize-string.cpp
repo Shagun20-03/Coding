@@ -5,7 +5,7 @@ public:
         vector<int> cnt(26, 0);
         
         int maxFreq=0;
-        char charMaxFreq;
+        int charMaxFreq;
         
         for(char &ch: s){
             cnt[ch-'a']++;  //storing the freq 
