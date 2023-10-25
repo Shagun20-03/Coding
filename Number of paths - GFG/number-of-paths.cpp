@@ -4,35 +4,43 @@ using namespace std;
  
 
 // } Driver Code Ends
-long long  numberOfPaths(int m, int n)
+class Solution
 {
-    
-    // Code Here
-    int dp[m][n];
-    
-    for(int i=0;i<m;i++)
+    public:
+    long long  numberOfPaths(int M, int N)
     {
-        for(int j=0;j<n;j++)
-        {
-            if(i==0 && j==0)
-            {
-                dp[i][j]=1;
-            }
-            else
-            {
-                int up=0, left=0;
-                if(i>0){
-                    up=dp[i-1][j];
-                }
-                if(j>0){
-                    left=dp[i][j-1];
-                }
-                dp[i][j]=up+left;
-            }
+        // Code Here
+        const int mod = 1000000007;
+         
+        int n = M + N - 2;
+        int r = M - 1;
+        long long res = 1;
+       
+        for (int i = 1; i <= r; i++) { //nCr= n*(n-1)..r/r!
+          res=(res*(n-i+1))%mod;
+          res=(res* modInverse(i, mod)) % mod;
         }
+        return res;
     }
-    return dp[m-1][n-1];
-}
+    
+    private:
+    long modInverse(int a, int m) {
+        return modPow(a, m-2, m);
+    }
+    long long modPow(long long base, int exp, int mod){
+        long long result=1;
+        
+        while(exp>0){
+            if(exp%2==1){
+                result=(result*base)%mod;
+            }
+            base=(base*base)%mod;
+            exp /= 2;
+        }
+        return result;
+    }
+};
+
 
 //{ Driver Code Starts.
 
@@ -43,9 +51,10 @@ int main()
 	cin>>t;
 	while(t--)
 	{
-		int n,m;
-		cin>>m>>n;
-	    cout << numberOfPaths(m, n)<<endl;
+		int N, M;
+		cin>>M>>N;
+		Solution ob;
+	    cout << ob.numberOfPaths(M, N)<<endl;
 	}
     return 0;
 }
