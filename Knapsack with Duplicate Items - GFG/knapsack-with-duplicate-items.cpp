@@ -16,7 +16,7 @@ public:
         
         for(int i=0;i<=N;i++) {
             for(int j=0;j<=W;j++) {
-                if(i==0 || j==0) { /
+                if(i==0 || j==0) {
                     t[i][j]=0;
                 }
                 else if(wt[i-1]<=j) {
@@ -32,6 +32,7 @@ public:
         return t[N][W];
     }
 };
+
 
 //{ Driver Code Starts.
 
